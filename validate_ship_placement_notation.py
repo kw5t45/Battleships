@@ -57,7 +57,7 @@ def validate_ship_notation(notation):
 def validate_single_notation(string):
     if len(string) > 3 or len(string) == 1:
         return False
-    letters = 'ABCDEFGHJ'
+    letters = 'ABCDEFGHJI'
     numbers = '123456789010'
     if string[0] not in letters or string[1::] not in numbers:
         return False

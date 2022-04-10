@@ -1,4 +1,9 @@
+import colorama
+
 from notation_to_list_indexes import convert_notation_to_index
+from colorama import Fore
+
+colorama.init()
 
 
 def flatten_list(_2d_list):
@@ -90,7 +95,7 @@ def replace_map_with_ships(map, notation):
     return map
 
 
-def replace_players_map_with_bombarded_square(map, notation):
+def replace_players_map_with_bombarded_square(map, notation):  # # # # # # # # #
     indexes = convert_notation_to_index(notation)
     map[int(indexes[0])][int(indexes[1])] = "╬"
     return map
@@ -98,7 +103,25 @@ def replace_players_map_with_bombarded_square(map, notation):
 
 def replace_hit_map_with_hit_notation(map, notation):
     indexes = convert_notation_to_index(notation)
-    map[int(indexes[0])][int(indexes[1])] = "▒"
+    map[int(indexes[0])][int(indexes[1])] = '▒'
+    return map
+
+
+def replace_map_with_red_square(map, notation):
+    indexes = convert_notation_to_index(notation)
+    map[int(indexes[0])][int(indexes[1])] = ('\033[31m' + '▒' + "\033[0m")
+    return map
+
+
+def replace_map_with_green_square(map, notation):
+    indexes = convert_notation_to_index(notation)
+    map[int(indexes[0])][int(indexes[1])] = ('\033[32m' + '▒' + "\033[0m")
+    return map
+
+
+def replace_map_with_magenta_square(map, notation):
+    indexes = convert_notation_to_index(notation)
+    map[int(indexes[0])][int(indexes[1])] = ('\033[35m' + '▒' + "\033[0m")
     return map
 
 

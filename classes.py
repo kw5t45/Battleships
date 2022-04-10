@@ -28,7 +28,7 @@ class Ship:
 
     def check_if_ship_got_sunk(self):  # checking if ship got sunk
         if self.times_that_ship_got_hit == self.length_of_ship:
-            print(f'Oh no! Your {self.name_of_ship} ship has been sunk!')
+            print(f'{self.name_of_ship}  has been sunk!')
         return ''
 
     def ship_is_sunk_boolean(self):

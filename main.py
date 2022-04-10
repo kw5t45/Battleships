@@ -3,7 +3,7 @@ from validate_ship_placement_notation import validate_ship_notation, validate_si
 from map_replacement_and_ship_validation import replace_map_with_ships, convert_notation_to_index, \
     convert_ship_edges_to_individual_notations, convert_ships_and_notations_dictionary_to_ship_names_and_notations, \
     replace_hit_map_with_hit_notation, replace_players_map_with_bombarded_square, check_whether_ships_collide, \
-    flatten_list
+    flatten_list, replace_map_with_red_square, replace_map_with_green_square, replace_map_with_magenta_square
 from default_map import get_default_map
 from classes import Player, Ship
 from bottard_plays_battleships import bot_choose_your_ship_placements, bot_play
@@ -96,7 +96,6 @@ bots_played_moves = []
 
 print('\nGame is starting!\n')
 while True:
-
     print_maps(default_map, bot_hit_map)
     print('\nChoose the notation you want to bomb!')
 
@@ -110,16 +109,23 @@ while True:
     if player1_chosen_notation not in players_played_moves:
         players_played_moves.append(player1_chosen_notation)
 
+    replace_hit_map_with_hit_notation(bot_hit_map, player1_chosen_notation)
+    # print_maps(default_map, bot_hit_map)
+
     # checking if players input hit an enemy ship
     for i in bots_objects:
         if player1_chosen_notation in i.notations:
-            i.ship_got_hit()
-            t.sleep(1)
+            i.ship_got_hit()  # bots ship is hit
+            replace_map_with_green_square(bot_hit_map, player1_chosen_notation)
+            break
+        else:  # missed
+            replace_map_with_red_square(bot_hit_map, player1_chosen_notation)
+
         i.check_if_ship_got_sunk()
 
-    replace_hit_map_with_hit_notation(bot_hit_map, player1_chosen_notation)
-    print_maps(default_map, bot_hit_map)
 
+    print('Bottard is choosing a location!')
+    t.sleep(2)
     player2_chosen_notation = bot_play(bots_played_moves)
     bots_played_moves.append(player2_chosen_notation)
 
@@ -127,11 +133,14 @@ while True:
 
     for i in players_objects:
         if player2_chosen_notation in i.notations:
-            i.ship_got_hit()
-            t.sleep(1)
+            i.ship_got_hit()  # players ship is hit
+            replace_map_with_magenta_square(default_map,player2_chosen_notation)
+            break
+        else:
+            replace_map_with_red_square(default_map, player2_chosen_notation)
+
         i.check_if_ship_got_sunk()
 
-    replace_players_map_with_bombarded_square(default_map, player2_chosen_notation)
 
     if total_of_players_sunk_ships.count(True) == 5:
         player1.has_won()

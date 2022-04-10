@@ -19,5 +19,5 @@ on the map. Next to the map with your ships, appears the map which shows</br>
 the notations you hit on the enemy map.
 
 
-Special thanks to Konstantinos Daskalopoulos for helping me throughout </br>
+Special thanks to @KostasDas for helping me throughout </br>
 this project.
