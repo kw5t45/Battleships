@@ -2,7 +2,7 @@ from print_map_function import print_maps
 from validate_ship_placement_notation import validate_ship_notation, validate_single_notation
 from map_replacement_and_ship_validation import replace_map_with_ships, convert_notation_to_index, \
     convert_ship_edges_to_individual_notations, convert_ships_and_notations_dictionary_to_ship_names_and_notations, \
-    replace_hit_map_with_hit_notation, replace_players_map_with_bombarded_square, check_whether_ships_collide, \
+    check_whether_ships_collide, replace_hit_map_with_hit_notation, \
     flatten_list, replace_map_with_red_square, replace_map_with_green_square, replace_map_with_magenta_square
 from default_map import get_default_map
 from classes import Player, Ship
@@ -81,13 +81,6 @@ players_objects = [players_ship_1, players_ship_2, players_ship_3, players_ship_
 bots_objects = [bots_ship_1, bots_ship_2, bots_ship_3, bots_ship_4, bots_ship_5]
 
 
-total_of_players_sunk_ships = [players_ship_1.ship_is_sunk_boolean(), players_ship_2.ship_is_sunk_boolean(),
-                               players_ship_3.ship_is_sunk_boolean(), players_ship_4.ship_is_sunk_boolean(),
-                               players_ship_5.ship_is_sunk_boolean()]
-total_of_bots_sunk_ships = [bots_ship_1.ship_is_sunk_boolean(), bots_ship_2.ship_is_sunk_boolean(),
-                            bots_ship_3.ship_is_sunk_boolean(), bots_ship_4.ship_is_sunk_boolean(),
-                            bots_ship_5.ship_is_sunk_boolean()]
-
 players_played_moves = []
 bots_played_moves = []
 
@@ -123,7 +116,6 @@ while True:
 
         i.check_if_ship_got_sunk()
 
-
     print('Bottard is choosing a location!')
     t.sleep(2)
     player2_chosen_notation = bot_play(bots_played_moves)
@@ -141,8 +133,22 @@ while True:
 
         i.check_if_ship_got_sunk()
 
+    # Checking if game is over
+
+    total_of_players_sunk_ships = []
+    total_of_bots_sunk_ships = []
+
+    for obj in players_objects:
+        total_of_players_sunk_ships.append(obj.ship_is_sunk_boolean())
+    for obj in bots_objects:
+        total_of_bots_sunk_ships.append(obj.ship_is_sunk_boolean())
 
     if total_of_players_sunk_ships.count(True) == 5:
-        player1.has_won()
+        player1.player_won()
+        break
     elif total_of_bots_sunk_ships.count(True) == 5:
-        player2.has_won()
+        player2.player_won()
+        break
+    total_of_players_sunk_ships.clear()
+    total_of_bots_sunk_ships.clear()
+quit()

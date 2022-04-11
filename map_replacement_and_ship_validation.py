@@ -95,10 +95,7 @@ def replace_map_with_ships(map, notation):
     return map
 
 
-def replace_players_map_with_bombarded_square(map, notation):  # # # # # # # # #
-    indexes = convert_notation_to_index(notation)
-    map[int(indexes[0])][int(indexes[1])] = "╬"
-    return map
+
 
 
 def replace_hit_map_with_hit_notation(map, notation):

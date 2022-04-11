@@ -6,9 +6,11 @@ class Player:
         self.player = name_of_player
 
     def player_won(self):
-        self.has_won = True
-        print(f'Player {self.player} has won the game!')
-        quit()
+        if self.player == 'You':
+            print(f'\n\n{self.player} have won the game! Congratulations!')
+
+        else:
+            print(f'{self.player}tard has won the game! You lost!')
 
 
 class Ship:
@@ -29,9 +31,9 @@ class Ship:
     def check_if_ship_got_sunk(self):  # checking if ship got sunk
         if self.times_that_ship_got_hit == self.length_of_ship:
             print(f'{self.name_of_ship}  has been sunk!')
-        return ''
 
     def ship_is_sunk_boolean(self):
         if self.length_of_ship == self.times_that_ship_got_hit:
             return True  # is sunk
-        return False
+        else:
+            return False
