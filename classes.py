@@ -17,6 +17,7 @@ class Ship:
     name_of_ship = ''
     length_of_ship = 0
     times_that_ship_got_hit = 0
+    sunk_status_has_appeared_once = False
 
     def __init__(self, name, length, notations):
         self.length_of_ship = length
@@ -29,9 +30,9 @@ class Ship:
         return ''
 
     def check_if_ship_got_sunk(self):  # checking if ship got sunk
-        if self.times_that_ship_got_hit == self.length_of_ship:
+        if self.times_that_ship_got_hit == self.length_of_ship and self.sunk_status_has_appeared_once == False:
             print(f'{self.name_of_ship}  has been sunk!')
-
+            self.sunk_status_has_appeared_once = True
     def ship_is_sunk_boolean(self):
         if self.length_of_ship == self.times_that_ship_got_hit:
             return True  # is sunk

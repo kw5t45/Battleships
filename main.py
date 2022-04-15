@@ -84,14 +84,21 @@ bots_objects = [bots_ship_1, bots_ship_2, bots_ship_3, bots_ship_4, bots_ship_5]
 players_played_moves = []
 bots_played_moves = []
 
-'''MAIN PART'''
+# data analysis
 
+total_player_movements = 0
+total_bot_movements = 0
+total_player_hit_movements = 0
+total_bot_hit_movements = 0
+
+'''MAIN PART'''
 
 print('\nGame is starting!\n')
 while True:
     print_maps(default_map, bot_hit_map)
     print('\nChoose the notation you want to bomb!')
 
+    # taking players bomb notation and validating it
     player1_chosen_notation = input()
     while not validate_single_notation(player1_chosen_notation):
         print('Notation should be only in CharNum form!')
@@ -102,19 +109,23 @@ while True:
     if player1_chosen_notation not in players_played_moves:
         players_played_moves.append(player1_chosen_notation)
 
-    replace_hit_map_with_hit_notation(bot_hit_map, player1_chosen_notation)
-    # print_maps(default_map, bot_hit_map)
+    # replacing hit map with players bomb notation
 
-    # checking if players input hit an enemy ship
+    replace_hit_map_with_hit_notation(bot_hit_map, player1_chosen_notation)
+
+    # checking if player hit a ship
     for i in bots_objects:
         if player1_chosen_notation in i.notations:
             i.ship_got_hit()  # bots ship is hit
             replace_map_with_green_square(bot_hit_map, player1_chosen_notation)
+            total_player_hit_movements += 1
             break
         else:  # missed
             replace_map_with_red_square(bot_hit_map, player1_chosen_notation)
 
         i.check_if_ship_got_sunk()
+
+    ############BOT CHOOSING A MOVE#############
 
     print('Bottard is choosing a location!')
     t.sleep(2)
@@ -127,13 +138,14 @@ while True:
         if player2_chosen_notation in i.notations:
             i.ship_got_hit()  # players ship is hit
             replace_map_with_magenta_square(default_map,player2_chosen_notation)
+            total_bot_hit_movements += 1
             break
         else:
             replace_map_with_red_square(default_map, player2_chosen_notation)
 
         i.check_if_ship_got_sunk()
 
-    # Checking if game is over
+    # Checking if game is over #######
 
     total_of_players_sunk_ships = []
     total_of_bots_sunk_ships = []
@@ -144,11 +156,24 @@ while True:
         total_of_bots_sunk_ships.append(obj.ship_is_sunk_boolean())
 
     if total_of_players_sunk_ships.count(True) == 5:
-        player1.player_won()
-        break
-    elif total_of_bots_sunk_ships.count(True) == 5:
         player2.player_won()
         break
+    elif total_of_bots_sunk_ships.count(True) == 5:
+        player1.player_won()
+        break
+
     total_of_players_sunk_ships.clear()
     total_of_bots_sunk_ships.clear()
+
+    total_player_movements += 1
+    total_bot_movements += 1
+
+#  data analysis (out of while True loop)
+player_hit_percentage = round((total_player_hit_movements / total_player_movements) * 100, 2)
+bot_hit_percentage = round((total_bot_hit_movements / total_bot_movements) * 100, 2)
+
+print(f'\nTotal moves played: {total_bot_movements + total_player_movements}\n'
+      f'''Player's accuracy: {player_hit_percentage}%\n'''
+      f'''Bottard's accuracy: {bot_hit_percentage}%''')
 quit()
+

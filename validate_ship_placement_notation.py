@@ -59,6 +59,10 @@ def validate_single_notation(string):
         return False
     letters = 'ABCDEFGHJI'
     numbers = '123456789010'
+    if string[1] == '0':  # A01 case
+        return False
     if string[0] not in letters or string[1::] not in numbers:
+        return False
+    if int(string[1::]) > 10:  # A89 case
         return False
     return True

@@ -49,7 +49,6 @@ def convert_ship_edges_to_individual_notations(notations_list):
                 var.append(start[0] + str(int(start[1]) + chain))  # A1-A3 => A1, B1, C1
                 ships[ships_keys_list[index]] = var  # putting list back
                 chain += 1
-                # validating ship lengths
                 # chain = ship's length, there remove one ship from ships lengths list
 
         else:  # Horizontal placement  (A3-C3)
@@ -95,9 +94,6 @@ def replace_map_with_ships(map, notation):
     return map
 
 
-
-
-
 def replace_hit_map_with_hit_notation(map, notation):
     indexes = convert_notation_to_index(notation)
     map[int(indexes[0])][int(indexes[1])] = '▒'
@@ -130,9 +126,8 @@ def convert_ships_and_notations_dictionary_to_ship_names_and_notations(dic):
             output['Carrier'] = dic[ship]
         elif len(dic[ship]) == 4:
             output['Battleship'] = dic[ship]
-        elif len(dic[ship]) == 3 and one_three_length_in_output == True:
+        elif len(dic[ship]) == 3 and one_three_length_in_output:  # (== True:)
             output['Cruiser'] = dic[ship]
-
         elif len(dic[ship]) == 3:
             output['Submarine'] = dic[ship]
             one_three_length_in_output = True
